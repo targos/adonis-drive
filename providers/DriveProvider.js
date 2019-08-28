@@ -10,7 +10,7 @@
  */
 
 const { ServiceProvider } = require('@adonisjs/fold')
-const { StorageManager } = require('@targos/flydrive')
+const { StorageManager } = require('@slynova/flydrive')
 const DriveManager = require('../src/DriveManager')
 
 class DriveProvider extends ServiceProvider {
