@@ -20,7 +20,7 @@ export default class DriveProvider {
 
   register() {
     this.$container.singleton('Drive', () => {
-      const config = this.$container.use('Adonis/Src/Config').get('drive');
+      const config = this.$container.use('Adonis/Core/Config').get('drive');
       const flyDriverInstance = new StorageManager(config);
       return flyDriverInstance;
     });
