@@ -1,6 +1,6 @@
 {
   "name": "@targos/adonis-drive",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Driver based file system built on top of flydrive",
   "main": "lib/src/DriveProvider.js",
   "types": "lib/src/types.d.ts",
