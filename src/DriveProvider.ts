@@ -1,15 +1,11 @@
-/*
- * adonis-drive
- *
- * (c) Harminder Virk <virk@adonisjs.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+import { isAbsolute } from 'path';
 
 import { IocContract } from '@adonisjs/fold';
-
-import { StorageManager } from '@slynova/flydrive';
+import {
+  StorageManager,
+  StorageManagerConfig,
+  LocalFileSystemConfig,
+} from '@slynova/flydrive';
 
 export default class DriveProvider {
   private $container: IocContract;
@@ -20,7 +16,21 @@ export default class DriveProvider {
 
   register() {
     this.$container.singleton('Drive', () => {
-      const config = this.$container.use('Adonis/Core/Config').get('drive');
+      const Application = this.$container.use('Adonis/Core/Application');
+      const config: StorageManagerConfig = this.$container
+        .use('Adonis/Core/Config')
+        .get('drive');
+      if (config.disks) {
+        for (const configElement of Object.values(config.disks)) {
+          if (configElement.driver === 'local') {
+            // @ts-ignore
+            const configElementLocal = configElement as LocalFileSystemConfig;
+            configElementLocal.root = isAbsolute(configElementLocal.root)
+              ? configElementLocal.root
+              : Application.makePathFromCwd(configElementLocal.root);
+          }
+        }
+      }
       const flyDriverInstance = new StorageManager(config);
       return flyDriverInstance;
     });
