@@ -1,0 +1,19 @@
+import { DriveConfig } from '@ioc:Drive';
+
+import Env from '@ioc:Adonis/Core/Env';
+
+const driveConfig: DriveConfig = {
+  default: 'local',
+  disks: {
+    local: {
+      driver: 'local',
+      root: Env.getOrFail('DRIVE_DATA_ROOT'),
+    },
+    tmp: {
+      driver: 'local',
+      root: Env.getOrFail('DRIVE_TMP_ROOT'),
+    },
+  },
+};
+
+export default driveConfig;

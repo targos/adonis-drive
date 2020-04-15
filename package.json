@@ -17,15 +17,27 @@
   ],
   "author": "virk",
   "license": "MIT",
+  "adonisjs": {
+    "templates": {
+      "basePath": "./templates",
+      "config": [
+        "drive.txt"
+      ]
+    },
+    "types": "@targos/adonis-drive",
+    "providers": [
+      "@targos/adonis-drive"
+    ]
+  },
   "dependencies": {
-    "@google-cloud/storage": "^4.1.3",
+    "@google-cloud/storage": "^4.7.0",
     "@slynova/flydrive": "^1.0.0-0",
-    "aws-sdk": "^2.581.0"
+    "aws-sdk": "^2.656.0"
   },
   "devDependencies": {
-    "@adonisjs/core": "^2.0.14",
+    "@adonisjs/core": "^5.0.0-preview.5",
     "@adonisjs/fold": "^6.1.5",
-    "typescript": "^3.6.2"
+    "typescript": "^3.8.3"
   },
   "prettier": {
     "arrowParens": "always",
