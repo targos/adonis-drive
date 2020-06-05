@@ -1,65 +1,118 @@
 {
-  "name": "@adonisjs/drive",
-  "version": "1.0.4",
-  "description": "Driver based file system built on top of flydrive",
-  "main": "index.js",
-  "files": [
-    "examples",
-    "providers",
-    "src",
-    "instructions.js",
-    "instructions.md"
-  ],
-  "scripts": {
-    "mrm": "mrm --preset=@adonisjs/mrm-preset",
-    "pretest": "npm run lint",
-    "posttest": "npm run coverage",
-    "test:local": "FORCE_COLOR=true node bin/index.js --local",
-    "test": "nyc japa",
-    "test:win": "node ./node_modules/japa-cli/index.js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "commit": "git-cz",
-    "lint": "standard"
-  },
-  "keywords": [
-    "fs",
-    "aws",
-    "s3"
-  ],
-  "author": "virk",
-  "license": "MIT",
-  "dependencies": {
-    "@slynova/flydrive": "^0.3.1"
-  },
-  "devDependencies": {
-    "@adonisjs/fold": "^4.0.9",
-    "@adonisjs/mrm-preset": "^1.0.9",
-    "@adonisjs/sink": "^1.0.16",
-    "commitizen": "^2.10.1",
-    "coveralls": "^3.0.2",
-    "cz-conventional-changelog": "^2.1.0",
-    "japa": "^1.0.6",
-    "japa-cli": "^1.0.1",
-    "mrm": "^1.2.1",
-    "nyc": "^12.0.2",
-    "pkg-ok": "^2.2.0",
-    "semver": "^5.5.0",
-    "standard": "^11.0.1"
-  },
-  "standard": {
-    "globals": [
-      "use"
-    ]
-  },
-  "nyc": {
-    "exclude": [
-      "test",
-      "japaFile.js"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  }
+	"name": "@adonisjs/drive",
+	"version": "1.0.4",
+	"description": "Driver-based file system built on top of Flydrive",
+	"main": "build/providers/DriveProvider.js",
+	"files": [
+		"build/adonis-typings",
+		"build/providers",
+		"build/src",
+		"build/templates"
+	],
+	"types": "build/adonis-typings/drive.d.ts",
+	"scripts": {
+		"mrm": "mrm --preset=@adonisjs/mrm-preset",
+		"pretest": "npm run lint",
+		"test": "node japaFile.js",
+		"clean": "del build",
+		"compile": "npm run lint && npm run clean && tsc",
+		"copyfiles": "copyfiles \"templates/**/*.txt\" build",
+		"build": "npm run compile && npm run copyfiles",
+		"prepublishOnly": "npm run build",
+		"lint": "eslint . --ext=.ts",
+		"format": "prettier --write .",
+		"commit": "git-cz",
+		"release": "np",
+		"version": "npm run build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/adonisjs/adonis-drive.git"
+	},
+	"keywords": [
+		"fs",
+		"drive"
+	],
+	"author": "virk,adonisjs",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/adonisjs/adonis-drive/issues"
+	},
+	"homepage": "https://github.com/adonisjs/adonis-drive#readme",
+	"publishConfig": {
+		"access": "public",
+		"tag": "alpha"
+	},
+	"devDependencies": {
+		"@adonisjs/fold": "^6.3.5",
+		"@adonisjs/mrm-preset": "^2.3.7",
+		"@types/node": "^14.0.22",
+		"commitizen": "^4.1.2",
+		"copyfiles": "^2.3.0",
+		"cz-conventional-changelog": "^3.2.0",
+		"del-cli": "^3.0.1",
+		"doctoc": "^1.4.0",
+		"eslint": "^7.4.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-adonis": "^1.0.14",
+		"eslint-plugin-prettier": "^3.1.4",
+		"husky": "^4.2.5",
+		"japa": "^3.1.1",
+		"mrm": "^2.3.3",
+		"np": "^6.3.2",
+		"npm-audit-html": "^1.4.1",
+		"prettier": "^2.0.5",
+		"ts-node": "^8.10.2",
+		"typescript": "^3.9.6"
+	},
+	"dependencies": {
+		"@slynova/flydrive": "^1.0.2"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm audit --production --json | ./node_modules/.bin/npm-audit-html && git add npm-audit.html && doctoc README.md --title='## Table of contents' && git add README.md",
+			"commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
+		}
+	},
+	"nyc": {
+		"exclude": [
+			"test"
+		],
+		"extension": [
+			".ts"
+		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
+	},
+	"np": {
+		"contents": ".",
+		"anyBranch": false
+	},
+	"adonisjs": {
+		"templates": {
+			"config": [
+				{
+					"src": "config.txt",
+					"dest": "drive"
+				}
+			],
+			"contracts": [
+				{
+					"src": "contract.txt",
+					"dest": "drive"
+				}
+			]
+		},
+		"types": "@adonisjs/drive",
+		"providers": [
+			"@adonisjs/drive"
+		],
+		"env": {
+			"DRIVE_DISK": "local",
+			"DRIVE_ROOT": "files"
+		}
+	}
 }
