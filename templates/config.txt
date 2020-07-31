@@ -33,9 +33,12 @@ const driveConfig: DriveConfig = {
     |
     */
     local: {
-      root: Env.get('DRIVE_ROOT', 'files') as string,
+      driver: 'local',
+      config: {
+        root: Env.get('DRIVE_ROOT', 'files') as string,
+      },
     },
-  }
+  },
 }
 
 export default driveConfig
