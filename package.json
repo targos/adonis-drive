@@ -38,8 +38,7 @@
 	},
 	"homepage": "https://github.com/adonisjs/drive#readme",
 	"publishConfig": {
-		"access": "public",
-		"tag": "alpha"
+		"access": "public"
 	},
 	"devDependencies": {
 		"@adonisjs/core": "^5.0.4-preview-rc-2",
