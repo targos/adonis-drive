@@ -7,23 +7,26 @@
  * file that was distributed with this source code.
  */
 
-import { ApplicationContract } from '@ioc:Adonis/Core/Application'
+// @ts-ignore
+import { ServiceProvider } from '@adonisjs/fold'
 import { StorageManager } from '@slynova/flydrive'
 
 /**
  * Provider to bind drive to the container
  */
-export default class DriveProvider {
-	public static needsApplication = true
-	constructor(protected app: ApplicationContract) {}
+class DriveProvider {
+	constructor(protected app: any) {}
 
 	/**
 	 * Register the drive binding
 	 */
 	public register() {
-		this.app.container.singleton('Adonis/Addons/Drive', () => {
-			const config = this.app.config.get('drive', {})
+		this.app.singleton('Adonis/Addons/Drive', () => {
+			const Config = this.app.use('Adonis/Src/Config')
+			const config = Config.get('drive', {})
 			return new StorageManager(config)
 		})
 	}
 }
+
+export = DriveProvider
