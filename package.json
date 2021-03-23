@@ -39,10 +39,6 @@
 		"url": "https://github.com/adonisjs/adonis-drive/issues"
 	},
 	"homepage": "https://github.com/adonisjs/adonis-drive#readme",
-	"publishConfig": {
-		"access": "public",
-		"tag": "alpha"
-	},
 	"devDependencies": {
 		"@adonisjs/core": "^5.1.0",
 		"@adonisjs/mrm-preset": "^3.0.0",
